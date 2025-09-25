@@ -1,27 +1,33 @@
-﻿using CsBases.Fundamentals;
+﻿using System.Threading.Tasks;
+using CsBases.Fundamentals;
 
 class Program
 {
-    static void Main()
+    static async Task Main()
     {
         // Uso de Clases e Interfaces con Herencia
-        var laptop = new Product("Macbook Pro M2", 2100.99m);
-        WriteLine(laptop.GetDescription());
+        // var laptop = new Product("Macbook Pro M2", 2100.99m);
+        // WriteLine(laptop.GetDescription());
 
-        var soporte = new ServiceProduct("Apple Care", 101.99m, 365);
-        WriteLine(soporte.GetDescription());
+        // var soporte = new ServiceProduct("Apple Care", 101.99m, 365);
+        // WriteLine(soporte.GetDescription());
 
         // Aplicación de patron ADAPTER mediante un DTO
-        var mouse = new Product("Magic mouse", 85.99m);
-        var productDto = ProductAdapter.ToDto(mouse);
-        WriteLine($"{productDto.Name} - {productDto.Price:C} - Código: {productDto.Code}");
+        // var mouse = new Product("Magic mouse", 85.99m);
+        // var productDto = ProductAdapter.ToDto(mouse);
+        // WriteLine($"{productDto.Name} - {productDto.Price:C} - Código: {productDto.Code}");
 
         // Inyección de dependencias
-        ILabelService labelService = new LabelService();
-        var manager = new ProductManager(labelService);
-        var monitor = new Product("Apple Pro Display", 5000.99m);
-        var installation = new ServiceProduct("Instalación de monitor", 20.99m, 1);
-        manager.PrintLabel(monitor);
-        manager.PrintLabel(installation);
+        // ILabelService labelService = new LabelService();
+        // var manager = new ProductManager(labelService);
+        // var monitor = new Product("Apple Pro Display", 5000.99m);
+        // var installation = new ServiceProduct("Instalación de monitor", 20.99m, 1);
+        // manager.PrintLabel(monitor);
+        // manager.PrintLabel(installation);
+
+        // Métodos Asíncronos
+        var firstProduct = await new ProductRepository().GetProduct(1);
+        AttributeProcessor.ApplyUpperCase(firstProduct); // <-- Decorador
+        WriteLine($"{firstProduct.Name} - {firstProduct.Price}");
     }
 }
